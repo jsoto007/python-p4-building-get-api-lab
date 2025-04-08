@@ -5,8 +5,12 @@ from random import choice as rc
 from app import app
 from models import db, Bakery, BakedGood
 
+
+print("seeding 🌱🌱🌱")
+
 with app.app_context():
 
+    
     BakedGood.query.delete()
     Bakery.query.delete()
     
@@ -23,3 +27,5 @@ with app.app_context():
 
     db.session.add_all(baked_goods)
     db.session.commit()
+
+print("Done Seeding 🪴🪴🪴")
