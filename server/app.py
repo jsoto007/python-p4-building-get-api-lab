@@ -22,14 +22,14 @@ def index():
 @app.route('/bakeries')
 def bakeries():
     bakeries = [bakery.to_dict() for bakery in Bakery.query.all()]
-    return make_response(bakeries, 200)
+    return make_response(jsonify(bakeries), 200)
 
 
 @app.route('/bakeries/<int:id>')
 def bakery_by_id(id):
     found_bakery = Bakery.query.filter_by(id = id).first()
     bakery_serialize = found_bakery.to_dict()
-    return make_response(bakery_serialize, 200)
+    return make_response(jsonify(bakery_serialize), 200)
 
 
 @app.route('/baked_goods/by_price')
@@ -38,12 +38,17 @@ def baked_goods_by_price():
     baked_goods_serialized = [
         bg.to_dict() for bg in baked_goods
     ]
-    return make_response(baked_goods_serialized, 200)
+    return make_response(jsonify(baked_goods_serialized), 200)
 
 
 @app.route('/baked_goods/most_expensive')
 def most_expensive_baked_good():
-    return ''
+    expensive_baked_good = BakedGood.query.order_by(BakedGood.price.desc()).limit(1).first()
+    # expensive_baked_good_serialize = [
+    #     bg.to_dict() for bg in expensive_baked_good
+    # ]
+
+    return make_response(jsonify(expensive_baked_good.to_dict()), 200)
 
 
 if __name__ == '__main__':
